@@ -1,0 +1,132 @@
+now start sprid the page
+http://redking.blog.51cto.com/27212/120373 RHCE璇剧-RH131Linux绠＄绗Linux换
+
+    		<br>
+    		  <br>Linux的计划任务<br>
+<br>在很多时候为了自动化管理系统，我们都会用到计划任务，比如关机，管理，备份之类的操作，我们都可以使用计划任务来完成，这样可以是管理员的工作量大大降低，而且可靠度更好。<br>
+<br>linux系统支持一些能够自动执行任务的服务，我们称为计划任务。<br>
+<br>LINUX有三种计划任务：<br>
+<br>at：指定一个时间执行一个任务 （适用一个或多个任务，执行一次后就不用）<br>
+<br>cron：根据一个时间表自动执行任务 （使用一个或多个任务，周期性执行）<br>
+<br>系统级别的计划任务及其扩展anacron：在一个指定时间间隔错过后自动执行任务<br>
+<br>######################################################################<br>
+<br>下面我们来分别介绍这三种服务<br>
+<br><strong>一、at服务：安排一个任务在未来执行，需要一个atd的系统后台进程</strong><br>
+<br><strong>常用指令:</strong><br>
+<br>at:安排延时任务<br>
+<br>
+<br>具体使用方法: 
+<br>
+<br>例1 <br>
+<br>#at now+2 minutes&nbsp; 回车<br>
+<br>&gt;输入要执行的命令<br>
+<br>&gt;ctrl+d 结束输入<br>
+<br><img src="http://img1.51cto.com/attachment/200812/17/27212_1229504522n5WC.png" width="453" border="0" /> <br>
+<br>&lt;EOT&gt;是ctrl+d中断输入，这个命令意思是发送一个广播内容是Hello 51ctoblog.具体时间你可以改,单位可以改,可以用hours,months,years,weeks等.<br>
+<br>例2 我们还可以跟具体时间<br>
+<br>#at 16:50&nbsp; dec 17&nbsp;&nbsp; 回车<br>
+<br>&gt;输入命令<br>
+<br>&gt;ctrl+d结束输入<br>
+<br>意思是在今年的12月17日16:50运行这个命令.如果不加月和日,默认就是今天.<br>
+<br><img src="http://img1.51cto.com/attachment/200812/17/27212_1229504523mv26.png" width="414" border="0" /> <br>
+<br>atq；查询当前的等待任务 <br>
+<br>用atq来查询，已经运行的任务，就消失了。这就是at计划任务的重点，只运行一次<br>
+<br><img src="http://img1.51cto.com/attachment/200812/17/27212_1229504523rq6E.png" width="252" border="0" /> <br>
+<br>atrm：删除等待任务<br>
+<br>启动计划任务后，如果不想启动设定好的计划任务可以使用atrm命令删除。 <br>格式：atrm 任务号 <br>命令后面跟计划任务编号，如果不跟，就会删除这个用户所有的计划任务。 <br>例3<br>
+<br>atrm 10 //删除计划任务10 <br>atq //查看计划任务是否删除<br>
+<br><img src="http://img1.51cto.com/attachment/200812/18/27212_1229559873zHNL.png" width="286" border="0" /> <br>还可以进入到/var/spool/at目录里把计划任务删除，计划任务的文件都保存在该目录里，可以用rm -f 文件名来删除(以文件的形式删除计划任务，因为计划任务是以文件形式保存在该目录中) <br>例4:<br>
+<br>#cd /var/spool/at //进入到/var/spool/at目录中 <br>ls //显示目录中所有文件 <br>rm -f a0000b0138b19c //删除计划任务<br>
+<br><img src="http://img1.51cto.com/attachment/200812/18/27212_12295598731kK5.png" width="382" border="0" /> <br>在通常情况下，超级用户都可以使用这个命令。对于其他用户来说，能否可以使用就取决于两个文件:/etc/at.allow和/etc/at.deny。<br>
+<br>at 命令是可以基于用户来控制的，我们可以明确指定哪些用户可以使用at计划任务，哪些用户不可以使用at计划任务。<br>
+<br><strong>at的控制文件</strong><br>
+<br>/etc/at.allow <br>/etc/at.deny <br>
+<br>系统默认是有at.deny文件，如果某个用户名在这个文件里，他就不能使用at计划任务。如果有at.allow文件，allow文件先行，检查了allow明确允许，就不会检查deny。<br>
+<br><img src="http://img1.51cto.com/attachment/200812/18/27212_1229559873nkwA.png" width="250" border="0" /> <br>
+<br>如果你要让哪个用户不能使用计划任务，就直接把他的用户名写进去就可以了，一排只能写一个。<br>
+<br><img src="http://img1.51cto.com/attachment/200812/18/27212_1229559874xqE9.png" width="454" border="0" /> <br>
+<br><strong>二、cron服务</strong><br>
+<br>上面已经简单介绍了cron的一些进程和控制。下面我们来看看cron怎么实现。<br>
+<br>相对与at，cron的优点就是能够周期性的执行某个命令,at却只能执行一次<br>
+<br>cron的后台进程名字是crond ,cron也是system V的服务，所以我们可以service crond start|stop 来启动和关闭此服务,也可以使用chkconfig或者ntsysv来选择cron服务的默认开启，这些命令在以前我们都讲过的<br>
+<br>我们先简单介绍下cron的使用命令，然后来在结合实例讲解<br>
+<br><strong>制定个人计划任务</strong><br>
+<br>#crontab -e&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 编辑当前用户的cron表<br>
+<br>#crontab -l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 查看当前用户的cron表<br>
+<br>#crontab -r&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 删除当前用户的cron进程<br>
+<br>#crontab -u 用户名 以某用户的身份来控制cron表<br>
+<br>还有个重要的知识点，就是当用户的计划任务建立后是存放在var/spool/cron这个目录<br>
+<br>当使用crontab -e编辑当前用户的cron表后，会出现一个vi文件，cron的格式是这样的。分成两列，左边是时间，右边是运行的命令。时间是由5个部分组成。<br>
+<br>例：<br>
+<br>* * * * *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wall hello everyone<br>
+<br>5个星号分别代表：minute hour day-of-month month-of-year day-of-week&nbsp; ，而wall hello everyone 这是命令内容。上面的意识是每分每小时每天每月每周广播hello everyone。具体时间大家可以自己定义。如果要每两分钟发送就用*/2代替第一个*。也可以是用具体时间来表示。<br>
+<br>我们使用crontab -e编辑当前用户的cron表<br>
+<br>&nbsp;<img src="http://img1.51cto.com/attachment/200812/21/27212_12298419584Hni.png" width="377" border="0" /> <br>
+<br>打开后里面是空白的，什么都没有 <br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841961izWw.png" width="454" border="0" /> <br>
+<br>现在我们开始编辑， * * * * *&nbsp;&nbsp;&nbsp;&nbsp; ls /var/spool/cron前面是5个星号，使用空格分隔，然后按下TAB键，输入你要执行的命令，大家也往自己的列表里写入这些内容，然后我来讲解<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841963WUhd.png" width="454" border="0" /> <br>
+<br><strong>分钟 小时 日 月 周 ［用户名］ 命令</strong><br>
+<br>这里的5个星号就代表的时间和日期：<br>
+<br>第一个*星号代表个小时的第几分钟：minute 范围是从0-59<br>
+<br>第二个*星号代表每天的第几个小时：hour 范围是从0-23<br>
+<br>第三个*星号代表每月的第几个日：day-of-month 范围从1-31<br>
+<br>第四个*星号代表没年的第几个月：month-of-year 范围从1-12<br>
+<br>第五个*星号代表每周的星期几：day-of-week 范围从0-6，其中0表示星期日<br>
+<br>用户名：也就是执行程序要通过哪个用户来执行，这个一般可以省略；<br>
+<br>命令：执行的命令和参数。<br>
+<br>如果我要表示9月10日25分执行ls var/spool/cron任务怎么表示？ <br>
+<br>25 * 10 9 *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ls var/spool/cron<br>
+<br>由于我没表示小时，所以就只能里面为每小时<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841963hHFs.png" width="421" border="0" /> <br>
+<br>下面还有一个题目，我要在每周日，每分钟执行wall Hello redking.blog.51cto.com这个命令，时间怎么表示？<br>
+<br>*/1 * * * 0 wall Hello redking.blog.51cto.com<br>
+<br>*/&nbsp;&nbsp; 表示每多少分钟执行一次哈~&nbsp;<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_12298419701Mzz.png" border="0" ?395? /> <br>
+<br>保存退出哈~然后重新启动下crond，保证你的cron是启动的<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841971vqf0.png" border="0" ?454? /> <br>
+<br>当制定了cron任务后，可以用crontab -l查看<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841973Bmhi.png" border="0" ?440? /> <br>
+<br>也可以到/var/spool/cron/目录查看。里面的文件名字就是对应用户的cron任务。<br>
+<br>ls /var/spool/cron/<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841974wFS3.png" border="0" ?356? /> <br>
+<br>/var/spool/cron/root文件里面的内容就是刚才编辑的内容哈，我们看下：vim /var/spool/cron/root<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841975ddMq.png" border="0" ?454? /> <br>
+<br>正常的话，我们应该都看到crontab的效果了<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841983X2Ip.png" border="0" ?454? /> <br>
+<br>这样我们就可以把日常管理通过这个计划任务来操作。<br>
+<br>现在我们可以使用crontab -r 来删除当前用户的cron<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841986MK9E.png" border="0" ?423? /> <br>
+<br><strong>三、系统级别的计划任务及其扩展anacrontab</strong><br>
+<br>这个是系统设置好了，清理系统垃圾或者是自动执行某些脚本的系统任务，一般我们做了解就行了，不要更改<br>
+<br>配置文件是<strong>/etc/conrtab</strong>&nbsp;<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841987hv8K.png" border="0" ?327? /> <br>
+<br>我们看一下哈：vim /etc/crontab<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841987QZum.png" border="0" ?454? /> <br>
+<br><strong>SHELL：</strong>就是运行计划任务的解释器，默认是<strong>bash</strong>&nbsp;<br>
+<br><strong>PATH：</strong>执行命令的环境变量<br>
+<br><strong>MAILTO：</strong>计划任务的出发者用户<br>
+<br><strong>HOME：</strong>家目录为/<br>
+<br><strong>run-parts</strong>是一个脚本，在/usr/bin/run-parts，作用是执行一个目录下的所有脚本/程序。 <br>run-parts /etc/cron.hourly执行目录/etc/cron.hourly/之下的所有脚本/程序. <br>
+<br>run-parts下面就是运行的命令<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_12298419911DHp.png" border="0" ?333? /> <br>
+<br>每小时第一分钟以root运行/etc/cron.hourly&nbsp; <br>
+<br>下面我就不用讲解了，大家都能看懂了,在不同的时间运行相对应的脚本文件<br>
+<br><strong>vim /etc/crontab 与crontab -e写入的定时运行有什么区别? <br>vim /etc/crontab：是系统级别定义的crontab，/etc/crontab的所有者和组都是root <br>crontab -e ：是用户自定义的crontab，是所有的用户都可以写入的 <br>两种方法记录的位置不一样，一个在/etc/ 另一个在/var/ 里面。都被cron服务调用哈~</strong><br>
+<br>如果系统在以上说的时间没有开机怎么办？那么这个脚本不就是不能执行了？设计者早就想到了这个问题，所以就有了cron服务的扩展,目的就是为了防止非24小时开机的计算机遗漏的守护任务,<strong>anacrontab就是系统计划任务的扩展文件：在一个指定时间间隔错过后自动执行任务</strong><br>
+<br>他的格式是这样的：period&nbsp; delay&nbsp; job-identifier&nbsp; command <br>
+<br>period ― 命令执行的频率（天数） <br>delay ― 延迟时间（分钟） <br>job-identifier ― 任务的描述，用在 anacron 的消息中，并作为作业时间戳文件的名称，只能包括非空白的字符（除斜线外）。 <br>command ― 要执行的命令 <br>
+<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841992heQ5.png" border="0" ?454? /> <br>
+<br>第一行的意思是：每天开机65分钟后就检查cron.daily文件是否被执行了，如果今天没有被执行就执行他 <br>
+<br>第二行的意思是：每隔7天开机后70分钟检查cron.weekly文件是否被执行了,如果一周内没有被执行就执行他<br>
+<br>第三行的意思也差不多，大家可以看得懂哈~<br>
+<br>下面说说关于<strong>cron服务的控制</strong>&nbsp;<br>
+<br>和at差不多，就是/etc/cron.deny这个配置文件来控制 <br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841993RE8l.png" border="0" ?329? /> 
+<br>里面写入要禁止使用cron用户的名字，一行一个就OK了 <br>
+<br>
+<br><img src="http://img1.51cto.com/attachment/200812/21/27212_1229841993C0lg.png" border="0" ?454? /> <br>
+<br>好了，计划任务就这样，下期进入远程访问控制哈~~~ <strong>@^_^@</strong><br>
+<br><strong>########################################################</strong><br><p>本文出自 “<a href='http://redking.blog.51cto.com'>王乾De技术博客</a>” 博客，谢绝转载！</p>
+    		<br>
