@@ -1,0 +1,7 @@
+一、用法
+ip.list里写server端的IP地址，每行一个，如：     
+1.1.1.1  
+2.2.2.2  
+
+使用方法，将server.py部署于目标主机上，执行server.py；客户端执行  
+python client.py ip.list "command"即可  
