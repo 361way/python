@@ -5,7 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Highstock Example</title>
 
-        <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+        <!-- <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script> -->
+        <script type="text/javascript" src="http://ajax.useso.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <style type="text/css">
 ${demo.css}
         </style>
@@ -39,8 +40,10 @@ $(function () {
         </script>
     </head>
     <body>
-<script src="{{ url_for('static', filename='highstock.js') }}"></script>
-<script src="{{ url_for('static', filename='exporting.js') }}"></script>
+<!-- <script src="{{ url_for('static', filename='highstock.js') }}"></script> -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highstock/2.0.4/highstock.js"></script>
+<!-- <script src="{{ url_for('static', filename='exporting.js') }}"></script> -->
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
 
 
 <div id="container" style="height: 400px"></div>
