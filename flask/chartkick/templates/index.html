@@ -1,0 +1,9 @@
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>  
+<script src="http://code.highcharts.com/highcharts.js"></script>  -->
+
+<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>  
+<script src="{{ url_for('static', filename='highcharts.js') }}"></script>  
+<script src="{{ url_for('static', filename='chartkick.js') }}"></script>  
+  
+{% bar_chart data with style="width:200px; height:20px;" %}  
+{% pie_chart data %} 
