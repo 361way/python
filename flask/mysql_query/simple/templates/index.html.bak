@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<script type="text/javascript">
+  $(function() {
+    $("#submitBtn").click(function() {
+         $.ajax({
+            type: "GET",
+            url: $SCRIPT_ROOT + "/scan/" + $('input[name="echoText"]').val(),
+            success: function(data) {
+                $('#echoResult').text(data.value);
+            }
+        });     
+    });
+  });
+</script>
+<strong>Enter a value to echo back:</strong>
+<input type="text" size="10" id="echoText" name="echoText">
+<button type="button" id="submitBtn" name="submitBtn">Submit via AJAX</button><br><br>
+<strong><div id="echoResult"></div></strong>
+{% endblock %}

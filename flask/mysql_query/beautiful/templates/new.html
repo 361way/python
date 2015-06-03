@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+ 
+    <title>12306</title>
+ 
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  </head>
+ 
+  <body>
+ 
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+ 
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">12306</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">12306网站用户信息泄漏查询</a>
+        </div>
+</nav>
+ 
+ 
+<script src="{{ url_for('static', filename='js/template.js') }}"></script>
+ 
+ 
+ 
+<div class="container" style="padding-top: 48px;">
+    <div class="bs-callout bs-callout-info mt0">
+        <div class="alert alert-danger">
+            <p><h4>本系统程序仅为用户确认个人信息是否已经泄露，切勿用作非法目的,否则一切后果自负！</h4></p>
+        </div>
+    </div>
+ 
+ 
+<div class="row" style="margin:0;min-height:600px">
+            <div class="jumbotron search-box">
+                <p>请输入关键字：</p>
+                <div class="input-group">
+                    <input placeholder="***号"
+                           type="text" name="id" id="keyword" class="form-control">
+                    <span class="input-group-btn scan-but-span">
+                        <button class="btn btn-success" onclick="scan()" type="button">查找一下</button>
+                    </span>
+                </div>
+                <div class="input-group mt15"></div>
+                <div id="scan-result-box"></div>
+              </div>
+            <div id="container" class="row" style="hight:280px">
+        </div>
+    </div>
+ 
+
+    <script src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+   <script>
+    var keyword = "";
+            function scan(){
+             keyword = $.trim($("#keyword").val());
+                 if(keyword==''){
+                    alert('请输入id');
+                    $("#keyword").focus()
+                    return false;
+                 }
+            $.ajax({
+                        type:'get',
+                        dataType:'json',
+                        url: "/scan/" + keyword,
+                        success:function(data){
+                                if(!data.user_id){
+                                alert('恭喜!您的信息没有被泄露!');
+                                return false;
+                            }
+                var re="<ul>";
+                    re+="<li>姓  名："+data.user_name+'</li>';
+                    re+="<li>***："+data.user_id+'</li>';
+                    re+="<li>E-mail："+data.user_email+'</li>';
+                    re+="<li>手机号："+data.user_phone+'</li>';
+                    re+="</ul>"
+                    $('#container').html(re)
+                        },
+                        error:function(){
+                            alert('您的信息不存在!')
+                        }
+                    })
+                }
+     </script>
+  </body>
+ </html>
