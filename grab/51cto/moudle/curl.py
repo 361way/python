@@ -63,7 +63,7 @@ def initCurl():
         c.setopt(pycurl.COOKIEJAR, "cookie_file_name")
         c.setopt(pycurl.FOLLOWLOCATION, 1) #允许跟踪来源
         c.setopt(pycurl.MAXREDIRS, 5)
-	c.setopt(pycurl.CONNECTTIMEOUT, 8)
+        c.setopt(pycurl.CONNECTTIMEOUT, 8)
         c.setopt(pycurl.REFERER, "http://blog.51cto.com")
         #设置代理 如果有需要请去掉注释，并设置合适的参数
         #c.setopt(pycurl.PROXY, ‘http://11.11.11.11:8080′)

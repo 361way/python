@@ -44,17 +44,16 @@ for i in title_urls:
         m_sql = "insert into img (title,imgvalue) values (%s,%s)"
         data = (str(url),title[0])
         cursor.execute(u_sql,data) 
-#        u_conn.close()
-        
+        #u_conn.close()
         blog_url = str(url)
         c = initCurl()
-	html = GetDate(c, blog_url)
-	before = html.split('<div class="showContent">',1)[1]
-	content = before.split('<!--正文 end-->',1)[0]
+        html = GetDate(c, blog_url)
+        before = html.split('<div class="showContent">',1)[1]
+        content = before.split('<!--正文 end-->',1)[0]
         ############################get the imgs ,replace the img url################################
-	img=re.compile(r"""<img\s.*?\s?src\s*=\s*['|"]?([^\s'"]+).*?>""",re.I)
-	img_urls = img.findall(content)
-	img_urls = list(set(img_urls))
+        img=re.compile(r"""<img\s.*?\s?src\s*=\s*['|"]?([^\s'"]+).*?>""",re.I)
+        img_urls = img.findall(content)
+        img_urls = list(set(img_urls))
 
         for url in img_urls:
         ############################ there can use startswith() #####################################
@@ -73,23 +72,21 @@ for i in title_urls:
         r = re.compile(r'<pre><code.*?>(.+?)</code></pre>',re.S|re.I|re.M)
         content =  r.sub(r'<pre class="prettyprint linenums">\1</pre>', content)
         #content = content.replace("<pre class=\"prettyprint\">","<pre class=\"prettyprint linenums\">")
-	
         title = title[0]
-        
+
         curhost = 'localhost'##远程数据库服务器地址
         webuser = 'root'#数据库用户名
         webpwd ='123456'#数据库密码
         webdb = 'useso'#数据库名称
-        
+
         dbconn = MySQLdb.connect(host=curhost, user=webuser, passwd=webpwd, db=webdb, port=3306, charset='utf8', init_command="set names utf8")
-        
         flag = sync_wordpress(dbconn,title,content)
         if flag:
             print 'wordpress sync success'
         else:
             print 'wordpress sync error'
-    else:
-        print  url , 'have been spide'
+        else:
+            print  url , 'have been spide'
     
 #    time.sleep(5)
 elapsed = time.time() - now
