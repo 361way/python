@@ -2,7 +2,7 @@
 # coding=utf-8
 ## author: yangbk(itybku@139.com)
 ## site: www.361way.com
-## desc: test hasattr、setattr 、delattr and getattr
+## desc: test inspect module || hasattr、setattr 、delattr and getattr
 
 class test:
     def __init__(self):
@@ -14,6 +14,14 @@ class test:
     def greet(self):
         print "Hello,I'm %s" %self.name  
 foo = test()
+
+# test for inspect
+im = foo.greet
+import inspect
+if inspect.isroutine(im):
+        im()
+
+# test for hasattr getattr  setattr delattr
 print hasattr(foo,'abc')
 print hasattr(foo,'getName')
 
@@ -27,3 +35,5 @@ print getattr(foo,'name')
 
 delattr(foo,'name')
 print getattr(foo,'name','not find')
+
+
