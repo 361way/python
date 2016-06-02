@@ -56,7 +56,7 @@ html = GetDate(c, 'http://repo.saltstack.com/yum/rhel6/')
 #print type(html)
 #print html
 
-rpmpack = re.compile(r'href="(.*?).rpm',re.I)
+rpmpack = re.compile(r'href="(.*?)\.rpm',re.I)
 rpmpack_url = rpmpack.findall(html)
 #print rpmpack_url
 
