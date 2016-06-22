@@ -45,7 +45,7 @@ def  Gtag_ID(db,tags):
     return list(set(tag_list))
 
 
-db = MySQLdb.connect("localhost","root","0pI1HO1z","test" )
+db = MySQLdb.connect("localhost","root","111111","test" )
 url = "http://segmentfault.com/blog/wangbinke/1190000000351425"
 now = time.time()
 pool = urllib3.PoolManager()
