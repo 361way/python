@@ -1,0 +1,25 @@
+- name: Fetch configuration from all testservers
+  hosts: all
+  vars:
+      ID: "id:"
+      masterip: "master: 10.211.95.232"
+
+  tasks:
+      - name: copy migu repo to hosts
+        copy: src=./file/migu_rhel7.repo dest=/etc/yum.repos.d/migumirror.repo
+
+      - name: install salt repo
+        yum: name=https://repo.saltstack.com/yum/redhat/salt-repo-latest-2.el7.noarch.rpm state=present
+
+      - name: install salt minion
+        yum: name=salt-minion  state=latest
+
+      - name: set the salt master ip 
+        shell: echo {{ masterip }} >>/etc/salt/minion
+
+      - name: Get config
+        #shell: sed -i '/^#id:/a\id: {{ ansible_ens192.ipv4.address }}' /etc/salt/minion
+        lineinfile: dest=/etc/salt/minion regexp="^#id" line="{{ ID }} {{ inventory_hostname }}"
+  
+      - name: enable and start minion
+        shell: "systemctl enable salt-minion.service && systemctl start salt-minion.service"
