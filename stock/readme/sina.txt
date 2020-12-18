@@ -1,0 +1,13 @@
+资金净流入
+http://vip.stock.finance.sina.com.cn/moneyflow/#jlrlpm
+http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/MoneyFlow.ssl_bkzj_ssggzj?page=1&num=20&sort=netamount&asc=0&bankuai=&shichang=
+
+
+持续流入情况；
+http://vip.stock.finance.sina.com.cn/moneyflow/#lxjlrg
+
+bigdata
+http://finance.sina.com.cn/data/#visual-agrt
+
+http://vip.stock.finance.sina.com.cn/q/go.php/vIR_Burstout/index.phtml
+

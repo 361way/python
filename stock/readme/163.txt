@@ -1,0 +1,4 @@
+#总股本
+http://quotes.money.163.com/old/#query=EQA&DataType=HS_RANK&sort=PERCENT&order=desc&count=24&page=0
+
+

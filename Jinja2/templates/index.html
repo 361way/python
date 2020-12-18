@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>generating html</title>
+</head>
+<body>
+<center>
+    <h1>generating html</h1>
+    <p>{{ urls|length }} links</p>
+</center>
+<ol align="left">
+{% for url in urls -%}
+<li><a href="{{ url }}">{{ url }}</a></li>
+{% endfor -%}
+</ol>
+</body>
+</html>

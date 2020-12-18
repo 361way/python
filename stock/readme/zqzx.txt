@@ -1,0 +1,11 @@
+证券之星
+
+
+#沪深A股涨跌股，成交量等信息
+http://quote.stockstar.com/stock/ranklist_a.shtml
+
+#资金流向
+http://quote.stockstar.com/cashflow/1_3_1_1.html
+
+#净流入
+http://quote.stockstar.com/cashflow/continue/in_4_1_1.html

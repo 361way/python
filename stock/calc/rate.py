@@ -19,8 +19,6 @@ def  rate(value):
 	result = x.get_string(hrules=ALL)
 	print(result)
 
-print 'wwdn 维维豆奶'
-rate(12.61)
 '''
 print 'hhkg  辉煌科技'
 rate(32.27)
@@ -34,7 +32,7 @@ rate(12.39)
 '''
 #print 'tpjt 塔牌集团'
 #rate(23.18)
-print 'xspc 小商品城'
-rate(15.32)
-print 'yjpj 燕京啤酒'
-rate(12.34)
+print 'skja '
+rate(4.3)
+print 'trt  连云港'
+rate(31.5)

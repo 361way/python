@@ -14,6 +14,8 @@ text = '''
 内容服务器目前总的disk空间使用情况和inode使用情况见附件：summary.txt 
 空间使用超过80%的挂载点见附件：alarmdisk.txt 
 inode使用空间超过80%挂载点见附件：alarminode.txt 
+\n
+注：本内容为自动检测并邮件发送，请务回复！有问题可以直接沟通！
 '''
 if isinstance(text,unicode):
    text = str(text)
@@ -40,7 +42,8 @@ subject = '内容服务器磁盘和inode巡检结果'
 if not isinstance(subject,unicode):
    subject = unicode(subject)
 
-msg['to'] = 'itybku@139.com'
+tolist = ['13666680525@139.com','itybku@139.com','18667046156@139.com','conglongyue@huawei.com','18868716501@139.com']
+msg['to'] = ", ".join(tolist)
 msg['from'] = 'itybku@163.com'
 msg['subject'] = subject
 msg["Accept-Language"]="zh-CN"
@@ -50,7 +53,7 @@ try:
     server = smtplib.SMTP()
     server.connect('smtp.163.com')
     server.login('itybku','mypassword')
-    server.sendmail(msg['from'], msg['to'],msg.as_string())
+    server.sendmail(msg['from'], tolist,msg.as_string())
     server.quit()
     print '发送成功'
 except Exception, e:

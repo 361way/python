@@ -2,7 +2,7 @@
   hosts: all
   vars:
       ID: "id:"
-      masterip: "master: 10.211.95.232"
+      masterip: "master: 192.168.95.232"
 
   tasks:
       - name: copy migu repo to hosts

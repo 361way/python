@@ -20,7 +20,7 @@ oracle_username='awr'
 oracle_password='awr'
 oracle_tnsnames='''
 (DESCRIPTION =
-       (ADDRESS = (PROTOCOL = TCP)(HOST = 10.211.93.147)(PORT = 1521))
+       (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.93.147)(PORT = 1521))
      (CONNECT_DATA =
              (SERVER = DEDICATED)
              (SERVICE_NAME = orcl)

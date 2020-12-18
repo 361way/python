@@ -14,5 +14,5 @@ def tcping(server, port):
         print str(port) + ' port not open'
 
 while 1:
-    tcping('10.212.52.252',6556)
+    tcping('192.168.52.252',6556)
     time.sleep(1)

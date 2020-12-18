@@ -1,0 +1,43 @@
+东方财富
+
+#之前已实现的功能 
+1、stoct百分比计算器
+2、实时股价和资金流入情况
+3、总股本
+4、根据热门行业和净流入排行情况选股
+
+5、多进程和多线程行情数据抓取（正在实现）
+
+#20161208
+
+#列所有股票（查询codeid 可以取第二个字段 + 第一个字估）
+http://nufm.dfcfw.com/EM_Finance2014NumericApplication/JS.aspx/JS.aspx?type=ct&st=(Code)&sr=1&p=1&ps=4000&js=(x)&token=894050c76af8597a853f5b408b759f5d&cmd=C._A&sty=DCFFITA&rt=49373571
+
+
+#实时资金排行：
+#计算净额比 ＝  净流入/流通股 （取最大值的前几名，或者返过来取最小值）
+http://data.eastmoney.com/zjlx/detail.html
+
+
+#主力资金排行(前两百个 + 净流入超过5000万的)
+#同时可以考虑将净流入值也做采集写入excel －－－便于在excel中做晒选
+#大于7%都除外
+http://data.eastmoney.com/zjlx/list.html
+
+
+
+#公司信息相关（市值等）
+http://softf9.eastmoney.com/v2/?fc=00096102&platform=ios&color=b
+
+#股本结构
+http://softf9.eastmoney.com/v2/F10_gbjg.aspx?fc=00096102&color=b&isShow=
+
+
+
+#资金情况
+http://ff.eastmoney.com/EM_CapitalFlowInterface/api/js?id=0009612&type=hff&rtntype=2&js=(x)&check=TMLBMS&cb=var%20ph_data=&QueryStyle=1&QuerySpan=2016-11-3&_=1481809483587
+http://nufm.dfcfw.com/EM_Finance2014NumericApplication/JS.aspx?type=CT&cmd=0009612&sty=CTBF&st=z&sr=&p=&ps=&cb=var%20pie_data=&js=(x)&token=28758b27a75f62dc3065b81f7facb365&_=1481809483586
+
+
+#财务信息
+http://data.eastmoney.com/bbsj/201706/yjbb.html

@@ -1,5 +1,5 @@
 [migumirror] 
 name=migumirror 
 enabled=1 
-baseurl=http://10.212.149.204/rhel7.3 
+baseurl=http://192.168.149.204/rhel7.3 
 gpgcheck=0
